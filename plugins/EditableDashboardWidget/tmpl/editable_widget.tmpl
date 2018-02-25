@@ -1,0 +1,58 @@
+<mt:setvarblock name="widget_label_or_default"><mt:var name="widget_label" escape="html" _default="<__trans phrase="(No Label)">"></mt:setvarblock>
+<mtapp:widget class="widget" label="$widget_label_or_default" can_close="1">
+<div id="editable_widget_content">
+  <div>
+    <mt:var name="widget_content" mteval="1" _default="<__trans phrase="(No Content)">">
+  </div>
+  <div>
+    <button class="edit action primary button">
+      <__trans phrase="Edit">
+    </button>
+  </div>
+</div>
+<div id="editable_widget_form" style="display: none;">
+  <mtapp:setting
+    id="label"
+    label="<__trans phrase="Label">">
+    <input type="text" class="text" name="widget_label" value="<mt:var name="widget_label" escape="html">">
+  </mtapp:setting>
+  <mtapp:setting
+    id="content"
+    label="<__trans phrase="Content">">
+    <textarea class="text high" name="widget_content"><mt:var name="widget_content" escape="html"></textarea>
+  </mtapp:setting>
+  <button class="save action primary button">
+    <__trans phrase="Save">
+  </button>
+  <button class="cancel action button">
+    <__trans phrase="Cancel">
+  </button>
+</div>
+</mtapp:widget>
+
+<script>
+jQuery(document).ready(function () {
+  jQuery('#editable_widget button.edit').click(function () {
+    jQuery('#editable_widget_content').hide();
+    jQuery('#editable_widget_form').show();
+    return false;
+  });
+  jQuery('#editable_widget button.save').click(function () {
+    jQuery('#editable_widget button').addClass('disabled');
+    var data = {};
+    jQuery('#editable_widget-form').find('input, textarea').each(function() {
+      data[this.name] = this.value;
+    });
+    jQuery.post('<mt:var name="script_url">', data).always(function () {
+      location.href = '<mt:var name="script_url">?saved=1&' + data.return_args;
+    });
+    return false;
+  });
+  jQuery('#editable_widget button.cancel').click(function () {
+    jQuery('#editable_widget_content').show();
+    jQuery('#editable_widget_form').hide();
+    return false;
+  });
+});
+</script>
+

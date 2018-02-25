@@ -1,0 +1,21 @@
+name: EditableDashboardWidget
+version: 0.01
+description: <__trans phrase="Enable to create editable widget on dashboard.">
+plugin_link: https://github.com/masiuchi/mt-plugin-editable-dashboard-widget
+author_name: Masahiro IUCHI
+author_link: https://github.com/masiuchi
+applications:
+  cms:
+    widgets:
+      editable_widget:
+        label: Editable Widget
+        order: 10
+        set: main
+        singular: 1
+        template: tmpl/editable_widget.tmpl
+        view:
+          - user
+          - system
+          - website
+          - blog
+
